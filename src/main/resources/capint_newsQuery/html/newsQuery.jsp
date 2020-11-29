@@ -39,27 +39,22 @@
         <div class="blog mb-5 col-md-4 mb-3" id="${news.getId()}">
             <div class="blog-wrapper">
                 <div class="img-blog ">
-                    <a href="${news.getUrl()}">
-                        <img src="${teaserImageUrl}" alt="${name}">
+                    <a href="${news.getUrl()}" title="${news.getTitle()}">
+                        <c:set var="imageURL" value="${news.getImage()}"/>
+                        <c:if test="${not empty imageURL and imageURL ne 'None'}">
+                            <img alt="${news.getTitle()}"
+                                 src="${news.getImage()}">
+                        </c:if>
                     </a>
                 </div>
                 <div class="content-blog">
-                    <div class="tag-outer">
-                        <div class="tag">
-                            <c:set var="imageURL" value="${news.getImage()}"/>
-                            <c:if test="${not empty imageURL and imageURL ne 'None'}">
-                                <img alt="${news.getTitle()}"
-                                     src="${news.getImage()}">
-                            </c:if>
-                        </div>
-                    </div>
                     <h2 class="blog-title">${news.getTitle()}</h2>
                     <div>
                         <p class="description-blog">${news.getDescription()}</p>
                             ${news.getPublished()}<br/>
                         <p><span class="text-muted font-italic">${news.getAuthor()}</span></p>
                     </div>
-                    <a href="${news.getUrl()}" class="read-more align-right">Read More</a>
+                    <a href="${news.getUrl()}" class="read-more align-right" title="${news.getTitle()}">Read More</a>
                 </div>
             </div>
         </div>

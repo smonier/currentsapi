@@ -12,7 +12,6 @@
     </bean>
 
     <bean class="org.jahia.modules.currentsapi.filters.News">
-
         <constructor-arg index="0" value="id"/>
         <constructor-arg index="1" value="title"/>
         <constructor-arg index="2" value="description"/>
