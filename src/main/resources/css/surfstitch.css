@@ -1359,6 +1359,7 @@
 
     .blog .blog-wrapper {
         background: #efefef;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     }
 
     .blog .img-blog {
@@ -1614,9 +1615,6 @@
         max-width: 100%;
     }
 
-    .blog .blog-wrapper {
-        background: #efefef;
-    }
 
     .blog .img-blog {
         position: relative;

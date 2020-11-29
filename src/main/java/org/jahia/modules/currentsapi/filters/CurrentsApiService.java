@@ -87,7 +87,13 @@ public class CurrentsApiService extends AbstractFilter {
                     //    JSONArray jsonArray = new JSONArray(newsArray);
                     for (int i = 0; i < newsArray.length(); i++) {
                         JSONObject array1 = newsArray.getJSONObject(i);
-                        NEWS_ARRAY_LIST.add(new News(array1.getString("id"), array1.getString("title"), array1.getString("description"), array1.getString("url"), array1.getString("author"), array1.getString("image"), array1.getString("published")));
+                        NEWS_ARRAY_LIST.add(new News(array1.getString("id"),
+                                array1.getString("title"),
+                                array1.getString("description"),
+                                array1.getString("url"),
+                                array1.getString("author"),
+                                array1.getString("image"),
+                                array1.getString("published")));
                     }
 
                 } catch (JSONException e) {

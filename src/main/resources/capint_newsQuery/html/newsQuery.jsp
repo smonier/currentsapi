@@ -9,7 +9,6 @@
 <%@ taglib prefix="query" uri="http://www.jahia.org/tags/queryLib" %>
 <%@ taglib prefix="utility" uri="http://www.jahia.org/tags/utilityLib" %>
 <%@ taglib prefix="s" uri="http://www.jahia.org/tags/search" %>
-<%@ page import="org.jahia.modules.currentsapi.filters.News" %>
 <%--@elvariable id="currentNode" type="org.jahia.services.content.JCRNodeWrapper"--%>
 <%--@elvariable id="out" type="java.io.PrintWriter"--%>
 <%--@elvariable id="script" type="org.jahia.services.render.scripting.Script"--%>
@@ -31,7 +30,7 @@
 
 
 <!--Title-->
-<h1 class="card-title text-primary">${title} from ${category}</h1>
+<h1 class="card-title text-primary">${title} from ${category} in ${region}</h1>
 <!--Text-->
 <p class="card-text text-secondary">${bannerText}</p>
 <div class="row">
@@ -52,7 +51,11 @@
                     <div>
                         <p class="description-blog">${news.getDescription()}</p>
                             ${news.getPublished()}<br/>
-                        <p><span class="text-muted font-italic">${news.getAuthor()}</span></p>
+                        <c:set var="author" value="${news.getAuthor()}"/>
+                        <c:if test="${not author.startsWith('[')}">
+                            <p><span class="text-muted font-italic">${news.getAuthor()}</span></p>
+                        </c:if>
+
                     </div>
                     <a href="${news.getUrl()}" class="read-more align-right" title="${news.getTitle()}">Read More</a>
                 </div>
