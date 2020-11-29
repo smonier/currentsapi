@@ -46,16 +46,18 @@
                 <div class="content-blog">
                     <div class="tag-outer">
                         <div class="tag">
-                            <img alt="${news.getTitle()}"
-                                 src="${news.getImage()}">
+                            <c:set var="imageURL" value="${news.getImage()}"/>
+                            <c:if test="${not empty imageURL and imageURL ne 'None'}">
+                                <img alt="${news.getTitle()}"
+                                     src="${news.getImage()}">
+                            </c:if>
                         </div>
                     </div>
                     <h2 class="blog-title">${news.getTitle()}</h2>
                     <div>
                         <p class="description-blog">${news.getDescription()}</p>
                             ${news.getPublished()}<br/>
-                            ${news.getAuthor()}
-
+                        <p><span class="text-muted font-italic">${news.getAuthor()}</span></p>
                     </div>
                     <a href="${news.getUrl()}" class="read-more align-right">Read More</a>
                 </div>

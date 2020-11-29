@@ -12,6 +12,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 import java.net.URL;
@@ -72,21 +73,21 @@ public class CurrentsApiService extends AbstractFilter {
         }
         if (address.length() > 0) {
 
-            logger.info("Currents API URL: " + address.toString() + "&apiKey=" + currentsApiKey);
+            logger.info("Currents API URL: " + address.toString());
             try {
-              //URL url = new URL(address.toString() + "&apiKey=" + currentsApiKey);
-             // JSONObject currentsApiJsonObject = new JSONObject(urlToJson(url));
+                //URL url = new URL(address.toString() + "&apiKey=" + currentsApiKey);
+                // JSONObject currentsApiJsonObject = new JSONObject(urlToJson(url));
                 String jsonString = readJsonFromUrl(address.toString() + "&apiKey=" + currentsApiKey);
                 JSONObject currentsApiJsonObject = new JSONObject(jsonString);
                 JSONArray newsArray = new JSONArray(currentsApiJsonObject.getString("news"));
                 ArrayList<Object> NEWS_ARRAY_LIST = new ArrayList<>();
                 logger.info(newsArray.toString());
 
-             try {
-                //    JSONArray jsonArray = new JSONArray(newsArray);
+                try {
+                    //    JSONArray jsonArray = new JSONArray(newsArray);
                     for (int i = 0; i < newsArray.length(); i++) {
                         JSONObject array1 = newsArray.getJSONObject(i);
-                        NEWS_ARRAY_LIST.add(new News(array1.getString("id"),array1.getString("title"),array1.getString("description"),array1.getString("url"),array1.getString("author"),array1.getString("image"),array1.getString("published")));
+                        NEWS_ARRAY_LIST.add(new News(array1.getString("id"), array1.getString("title"), array1.getString("description"), array1.getString("url"), array1.getString("author"), array1.getString("image"), array1.getString("published")));
                     }
 
                 } catch (JSONException e) {
@@ -136,6 +137,7 @@ public class CurrentsApiService extends AbstractFilter {
             is.close();
         }
     }
+
     public static JSONObject urlToJson(URL urlString) throws JSONException {
         StringBuilder sb = null;
         URL url;

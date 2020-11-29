@@ -7,20 +7,20 @@
                    j:title="currentsAPI"
                    jcr:mixinTypes="jmix:hasExternalProviderExtension"
                    jcr:primaryType="jnt:module">
-         <sources jcr:mixinTypes="jmix:hasExternalProviderExtension"
+         <sources jcr:mixinTypes="jmix:hasExternalProviderExtension jmix:sourceControl"
                   jcr:primaryType="jnt:moduleVersionFolder"
                   j:staticMountPointProviderKey="module-currentsapi-1.0.0-SNAPSHOT">
-            <src jcr:mixinTypes="jmix:hasExternalProviderExtension"
+            <src jcr:mixinTypes="jmix:hasExternalProviderExtension jmix:sourceControl"
                  jcr:primaryType="jnt:folder">
-               <main jcr:mixinTypes="jmix:hasExternalProviderExtension"
+               <main jcr:mixinTypes="jmix:hasExternalProviderExtension jmix:sourceControl"
                      jcr:primaryType="jnt:folder">
-                  <resources jcr:mixinTypes="jmix:hasExternalProviderExtension"
+                  <resources jcr:mixinTypes="jmix:hasExternalProviderExtension jmix:sourceControl"
                              jcr:primaryType="jnt:folder">
-                     <capint_newsQuery jcr:mixinTypes="jmix:hasExternalProviderExtension"
+                     <capint_newsQuery jcr:mixinTypes="jmix:hasExternalProviderExtension jmix:sourceControl"
                                        jcr:primaryType="jnt:nodeTypeFolder">
-                        <html jcr:mixinTypes="jmix:hasExternalProviderExtension"
+                        <html jcr:mixinTypes="jmix:hasExternalProviderExtension jmix:sourceControl"
                               jcr:primaryType="jnt:templateTypeFolder">
-                           <newsQuery.jsp jcr:primaryType="jnt:viewFile"/>
+                           <newsQuery.jsp jcr:mixinTypes="jmix:sourceControl" jcr:primaryType="jnt:viewFile"/>
                         </html>
                      </capint_newsQuery>
                   </resources>

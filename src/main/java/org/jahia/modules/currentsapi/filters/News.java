@@ -1,5 +1,8 @@
 package org.jahia.modules.currentsapi.filters;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 public class News {
 
     private String id;
@@ -38,7 +41,12 @@ public class News {
     public String getImage() {
         return this.image;
     }
-    public String getPublished() {
-        return this.published;
+    public String getPublished() throws ParseException {
+        String ds1 = this.published.substring(0,10);
+        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf2 = new SimpleDateFormat("E, dd MMM yyyy");
+        String ds2 = sdf2.format(sdf1.parse(ds1));
+        return ds2;
+
     }
 }
