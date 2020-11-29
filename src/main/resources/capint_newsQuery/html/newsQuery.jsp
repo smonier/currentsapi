@@ -31,7 +31,7 @@
 
 
 <!--Title-->
-<h1 class="card-title text-primary">${title}</h1>
+<h1 class="card-title text-primary">${title} from ${category}</h1>
 <!--Text-->
 <p class="card-text text-secondary">${bannerText}</p>
 <div class="row">
@@ -46,17 +46,18 @@
                 <div class="content-blog">
                     <div class="tag-outer">
                         <div class="tag">
-                            <img alt="All"
+                            <img alt="${news.getTitle()}"
                                  src="${news.getImage()}">
                         </div>
                     </div>
                     <h2 class="blog-title">${news.getTitle()}</h2>
                     <div>
                         <p class="description-blog">${news.getDescription()}</p>
-                            ${news.getPublished()}
+                            ${news.getPublished()}<br/>
+                            ${news.getAuthor()}
 
                     </div>
-                    <a href="${news.getUrl()}" class="read-more">Read More</a>
+                    <a href="${news.getUrl()}" class="read-more align-right">Read More</a>
                 </div>
             </div>
         </div>

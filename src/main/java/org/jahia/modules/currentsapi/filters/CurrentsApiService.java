@@ -77,24 +77,16 @@ public class CurrentsApiService extends AbstractFilter {
               //URL url = new URL(address.toString() + "&apiKey=" + currentsApiKey);
              // JSONObject currentsApiJsonObject = new JSONObject(urlToJson(url));
                 String jsonString = readJsonFromUrl(address.toString() + "&apiKey=" + currentsApiKey);
-                logger.info("Status: " + jsonString);
                 JSONObject currentsApiJsonObject = new JSONObject(jsonString);
                 JSONArray newsArray = new JSONArray(currentsApiJsonObject.getString("news"));
                 ArrayList<Object> NEWS_ARRAY_LIST = new ArrayList<>();
                 logger.info(newsArray.toString());
 
              try {
-                 logger.info(String.valueOf(newsArray.length()));
-                 logger.info(newsArray.getClass().toString());
                 //    JSONArray jsonArray = new JSONArray(newsArray);
-
                     for (int i = 0; i < newsArray.length(); i++) {
-                        logger.info("********************* " + i +" *********************");
-
                         JSONObject array1 = newsArray.getJSONObject(i);
                         NEWS_ARRAY_LIST.add(new News(array1.getString("id"),array1.getString("title"),array1.getString("description"),array1.getString("url"),array1.getString("author"),array1.getString("image"),array1.getString("published")));
-                        logger.info("ARRAY: ", String.valueOf(NEWS_ARRAY_LIST));
-
                     }
 
                 } catch (JSONException e) {
