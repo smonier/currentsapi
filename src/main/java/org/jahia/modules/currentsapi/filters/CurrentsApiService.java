@@ -64,7 +64,6 @@ public class CurrentsApiService extends AbstractFilter {
             address.append("&country=").append(nodeWrapper.getProperty("region").getString());
         }
         if (nodeWrapper.hasProperty("dateFrom")) {
-            logger.info(String.valueOf(nodeWrapper.getProperty("dateFrom").getDate().getTime()));
             SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd'T'HH:mm:ss.ss");
             GregorianCalendar cal = (GregorianCalendar) nodeWrapper.getProperty("dateFrom").getDate();
             sdf.setCalendar(cal);

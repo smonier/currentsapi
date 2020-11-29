@@ -57,7 +57,7 @@
                         </c:if>
 
                     </div>
-                    <a href="${news.getUrl()}" class="read-more align-right" title="${news.getTitle()}">Read More</a>
+                    <a href="${news.getUrl()}" class="read-more" title="${news.getTitle()}">Read More</a>
                 </div>
             </div>
         </div>

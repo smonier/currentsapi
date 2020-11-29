@@ -13,7 +13,7 @@ public class News {
     private String image;
     private String published;
 
-    public News(String id,  String title, String description, String url, String author, String image, String published) {
+    public News(String id, String title, String description, String url, String author, String image, String published) {
         this.id = id;
         this.title = title;
         this.description = description;
