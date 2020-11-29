@@ -2,7 +2,7 @@
 
 
 
-This Jahia jContent V8 module is designed to retreive News from the Currents API 
+This Jahia jContent V8 module is designed to retrieve News from the Currents API 
 (https://currentsapi.services/en)
 ---
 ### API KEY
