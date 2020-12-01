@@ -24,13 +24,20 @@
 <jcr:nodeProperty node="${currentNode}" name="language" var="language"/>
 <jcr:nodeProperty node="${currentNode}" name="region" var="region"/>
 <jcr:nodeProperty node="${currentNode}" name="dateFrom" var="dateFrom"/>
+<jcr:nodeProperty node="${currentNode}" name="queryType" var="queryType"/>
 
 <c:set var="title" value="${currentNode.properties['jcr:title'].string}"/>
 <c:set var="bannerText" value="${currentNode.properties['bannerText'].string}"/>
+<template:addCacheDependency node="${currentNode}"/>
 
 
 <!--Title-->
-<h1 class="card-title text-primary">${title} from ${category} in ${region}</h1>
+<c:if test="${queryType eq 'latest-news'}">
+    <h1 class="card-title text-primary">${title}</h1>
+</c:if>
+<c:if test="${queryType eq 'search'}">
+    <h1 class="card-title text-primary">${title} from ${category} in ${region}</h1>
+</c:if>
 <!--Text-->
 <p class="card-text text-secondary">${bannerText}</p>
 <div class="row">

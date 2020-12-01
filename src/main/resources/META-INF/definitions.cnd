@@ -8,7 +8,6 @@
 [capint:newsQuery] > jnt:content, mix:title, capimix:currentsAPI, jmix:list, capimix:queryType
  - bannerText (string, richtext) internationalized
 
-//*** CONTENT LINKER //
 [capimix:queryType] mixin
  - queryType (string, choicelist[newsQueryInitializer,resourceBundle]) indexed=no < 'latest-news', 'search'
  - language (string,choicelist) = 'en' indexed=no < 'en','fr','it','es','de'

@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.zip.GZIPInputStream;
+import org.jahia.modules.currentsapi.cache.CrunchifyInMemoryCache;
 
 /**
  * Inject Currents API Key into request to be used client side by jsp.
@@ -33,6 +34,8 @@ public class CurrentsApiService extends AbstractFilter {
     private String currentsApiKey;
     static final Logger logger = LoggerFactory.getLogger(CurrentsApiService.class);
     private Calendar publish_date;
+    private static CrunchifyInMemoryCache<String, String> cache = new CrunchifyInMemoryCache<String, String>(1200, 500, 50);
+
 
     @Override
     public String prepare(RenderContext renderContext, Resource resource, RenderChain chain) throws Exception, JSONException {
@@ -75,17 +78,30 @@ public class CurrentsApiService extends AbstractFilter {
             logger.info("Currents API URL: " + address.toString());
             try {
                 //URL url = new URL(address.toString() + "&apiKey=" + currentsApiKey);
-                // JSONObject currentsApiJsonObject = new JSONObject(urlToJson(url));
-                String jsonString = readJsonFromUrl(address.toString() + "&apiKey=" + currentsApiKey);
+                //JSONObject currentsApiJsonObject = new JSONObject(urlToJson(url));
+
+                String jsonString = null;
+                logger.info("Checking if Response already in cache ...");
+                logger.info("Cache Size: "+cache.size());
+                if (cache.get(address.toString()) != null) {
+                    jsonString = cache.get(address.toString());
+                    logger.info("Get Response from Cache ...");
+
+                } else {
+                    jsonString = readJsonFromUrl(address.toString() + "&apiKey=" + currentsApiKey);
+                    cache.put(address.toString(), jsonString);
+                    logger.info("Put Response in Cache ...");
+                    logger.info("Call API: "+jsonString);
+                }
                 JSONObject currentsApiJsonObject = new JSONObject(jsonString);
                 JSONArray newsArray = new JSONArray(currentsApiJsonObject.getString("news"));
                 ArrayList<Object> NEWS_ARRAY_LIST = new ArrayList<>();
-                logger.info(newsArray.toString());
 
                 try {
                     //    JSONArray jsonArray = new JSONArray(newsArray);
                     for (int i = 0; i < newsArray.length(); i++) {
                         JSONObject array1 = newsArray.getJSONObject(i);
+
                         NEWS_ARRAY_LIST.add(new News(array1.getString("id"),
                                 array1.getString("title"),
                                 array1.getString("description"),
