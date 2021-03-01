@@ -19,7 +19,7 @@ The components presents 2 choices based on the API:
  - language
 
 ### Screenshots
-Isotope List
+Cards List
 ![picture](./src/main/resources/images/readme/currentsAPIscreenshot.png)
 
 Vertical Carousel
