@@ -16,7 +16,7 @@
  extends = capimix:queryType
  - searchKeyword (string)
  - category (string,choicelist) = 'regional' indexed=no < 'regional','technology','lifestyle','business','general','programming','science','entertainment','world','sports','finance','academia','politics','health','opinion','food','game','fashion','academic','crap','travel','culture','economy','environment','art','music','notsure','CS','education','redundant','television','commodity','movie','entrepreneur','review','auto','energy','celebrity','medical','gadgets','design','EE','security','mobile','estate','funny'
- - dateFrom (date)
+// - dateFrom (date)
  - region (string,choicelist) = 'INT' indexed=no < 'INT','EU','US','UK','FR','IT','ES'
 
  [capimix:latestNews] > jmix:templateMixin mixin

@@ -9,6 +9,8 @@
 <%@ taglib prefix="query" uri="http://www.jahia.org/tags/queryLib" %>
 <%@ taglib prefix="utility" uri="http://www.jahia.org/tags/utilityLib" %>
 <%@ taglib prefix="s" uri="http://www.jahia.org/tags/search" %>
+<%@ taglib prefix="cnews" uri="http://www.jahia.org/tags/currentsNews" %>
+
 <%--@elvariable id="currentNode" type="org.jahia.services.content.JCRNodeWrapper"--%>
 <%--@elvariable id="out" type="java.io.PrintWriter"--%>
 <%--@elvariable id="script" type="org.jahia.services.render.scripting.Script"--%>
@@ -29,39 +31,49 @@
 <c:set var="title" value="${currentNode.properties['jcr:title'].string}"/>
 <c:set var="bannerText" value="${currentNode.properties['bannerText'].string}"/>
 <template:addCacheDependency node="${currentNode}"/>
+<c:set var="newsList" value="${cnews:getCurrentsNews(queryType, searchKeyword, language, category, region)}"/>
 
 
 <div class="container">
-    <div id="newsCarousel-${currentNode.UUID}" class="carousel vert slide" data-ride="carousel" data-interval="3000">
-        <div class="carousel-inner">
-            <c:forEach items="${newsList}" var="news" varStatus="status">
-                <div class="carousel-item ${status.first?' active':''}">
-                    <div class="card">
-                        <div class="card-horizontal" style="height:200px">
-                            <div class="img-square-wrapper">
-                                <c:set var="imageURL" value="${news.getImage()}"/>
-                                <c:if test="${not empty imageURL and imageURL ne 'None'}">
-                                    <img alt="${news.getTitle()}"
-                                         src="${news.getImage()}"
-                                         class="newsImg">
-                                </c:if>
-                            </div>
-                            <div class="card-body">
-                                <h5 class="card-title">${news.getTitle()}</h5>
-                                <p class="card-text">    ${news.getPublished()}
-                                    <c:set var="author" value="${news.getAuthor()}"/>
-                                    <c:if test="${not author.startsWith('[')}">
-                                        <span class="text-muted font-italic"> by ${news.getAuthor()}</span>
+    <div class="module_header">
+        <div class="module_title">${currentNode.properties['jcr:title'].string}</div>
+        <div class="module_divider">
+        </div>
+    </div>
+    <div class="module_body">
+        <div id="newsCarousel-${currentNode.UUID}" class="carousel vert slide" data-ride="carousel"
+             data-interval="3000">
+            <div class="carousel-inner">
+                <c:forEach items="${newsList}" var="news" varStatus="status">
+                    <div class="carousel-item ${status.first?' active':''}">
+                        <div class="card">
+                            <div class="card-horizontal" style="height:245px">
+                                <div class="img-square-wrapper">
+                                    <c:set var="imageURL" value="${news.getImage()}"/>
+                                    <c:if test="${not empty imageURL and imageURL ne 'None'}">
+                                        <img alt="${news.getTitle()}"
+                                             src="${news.getImage()}"
+                                             class="newsImg">
                                     </c:if>
-                                    <a href="${news.getUrl()}" class="btn btn-primary bottom-right m-2">Read More</a>
-                                </p>
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">${news.getTitle()}</h5>
+                                    <p class="card-text">    ${news.getPublished()}
+                                        <c:set var="author" value="${news.getAuthor()}"/>
+                                        <c:if test="${not author.startsWith('[')}">
+                                            <span class="text-muted font-italic"> by ${news.getAuthor()}</span>
+                                        </c:if>
+                                        <a href="${news.getUrl()}" class="btn btn-primary bottom-right m-2">Read
+                                            More</a>
+                                    </p>
+                                </div>
                             </div>
+
                         </div>
 
                     </div>
-
-                </div>
-            </c:forEach>
+                </c:forEach>
+            </div>
         </div>
     </div>
 </div>

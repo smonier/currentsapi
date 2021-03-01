@@ -1,4 +1,4 @@
-package org.jahia.modules.currentsapi.cache;
+package org.jahia.se.modules.currentsapi.cache;
 
 import java.util.ArrayList;
 import org.apache.commons.collections.MapIterator;

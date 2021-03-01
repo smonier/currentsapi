@@ -1,84 +1,95 @@
-package org.jahia.modules.currentsapi.filters;
+package org.jahia.se.modules.currentsapi.taglibs;
 
-import org.apache.commons.lang.StringUtils;
-import org.jahia.services.content.JCRNodeWrapper;
-import org.jahia.services.render.RenderContext;
-import org.jahia.services.render.Resource;
-import org.jahia.services.render.filter.AbstractFilter;
-import org.jahia.services.render.filter.RenderChain;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.jahia.se.modules.currentsapi.model.News;
+import org.jahia.se.modules.currentsapi.cache.CrunchifyInMemoryCache;
 import org.json.JSONArray;
 import org.json.JSONException;
 
 import org.json.JSONObject;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.Charset;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
+import java.util.*;
 import java.util.zip.GZIPInputStream;
-import org.jahia.modules.currentsapi.cache.CrunchifyInMemoryCache;
 
 /**
  * Inject Currents API Key into request to be used client side by jsp.
  * Created by smonier@jahia.com on 28/11/2020.
  */
-public class CurrentsApiService extends AbstractFilter {
-    private static final String CURRENTS_API_KEY_ATTR = "currentsApiKey";
-    private String currentsApiKey;
+@Component
+public class CurrentsApiService {
+
     static final Logger logger = LoggerFactory.getLogger(CurrentsApiService.class);
-    private Calendar publish_date;
+
+    private static String currentsApiKey;
     private static CrunchifyInMemoryCache<String, String> cache = new CrunchifyInMemoryCache<String, String>(1200, 500, 50);
 
-
-    @Override
-    public String prepare(RenderContext renderContext, Resource resource, RenderChain chain) throws Exception, JSONException {
-        if (StringUtils.isNotEmpty(currentsApiKey) && renderContext.getRequest().getAttribute(CURRENTS_API_KEY_ATTR) == null) {
-            renderContext.getRequest().setAttribute(CURRENTS_API_KEY_ATTR, currentsApiKey);
+    @Activate
+    public void activate(Map<String, ?> props) {
+        try {
+            setCurrentsApiKey((String) props.get("currentsApiKey"));
+            logger.info("API Key:"+getCurrentsApiKey());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
+    }
+    public String getCurrentsApiKey() {
+        return currentsApiKey;
+    }
 
+    public void setCurrentsApiKey(String currentsApiKey) {
+        this.currentsApiKey = currentsApiKey;
+    }
+
+
+    public static List<News> getCurrentsNews(String queryType, String searchKeyword, String language, String category, String region) throws IOException, JSONException {
+
+        List<News> NEWS_ARRAY_LIST = new ArrayList<>();
+        String currentsApiToken = currentsApiKey;
         logger.info("********************* CurrentsApiService *********************");
+        logger.info("API Key: "+ currentsApiToken);
+        long l = System.currentTimeMillis();
 
-        JCRNodeWrapper nodeWrapper = resource.getNode();
 
         StringBuilder address = new StringBuilder();
         address.append("https://api.currentsapi.services/v1/");
-        logger.info("QueryType:" + nodeWrapper.getProperty("queryType").getString());
+        logger.info("QueryType:" + queryType);
 
-        if (nodeWrapper.hasProperty("queryType")) {
-            address.append(nodeWrapper.getProperty("queryType").getString()).append("?");
+        if (queryType != "") {
+            address.append(queryType).append("?");
         }
-        if (nodeWrapper.hasProperty("searchKeyword")) {
-            address.append("keywords=").append(nodeWrapper.getProperty("searchKeyword").getString());
+        if (searchKeyword != "") {
+            address.append("keywords=").append(searchKeyword);
         }
-        if (nodeWrapper.hasProperty("language")) {
-            address.append("&language=").append(nodeWrapper.getProperty("language").getString());
+        if (language != "") {
+            address.append("&language=").append(language);
         }
-        if (nodeWrapper.hasProperty("category")) {
-            address.append("&category=").append(nodeWrapper.getProperty("category").getString());
+        if (category != "") {
+            address.append("&category=").append(category);
         }
-        if (nodeWrapper.hasProperty("region")) {
-            address.append("&country=").append(nodeWrapper.getProperty("region").getString());
+        if (region != "") {
+            address.append("&country=").append(region);
         }
-        if (nodeWrapper.hasProperty("dateFrom")) {
+   /*     if (dateFrom != null) {
             SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd'T'HH:mm:ss.ss");
-            GregorianCalendar cal = (GregorianCalendar) nodeWrapper.getProperty("dateFrom").getDate();
+            GregorianCalendar cal = (GregorianCalendar) dateFrom.getDate();
             sdf.setCalendar(cal);
             String str = sdf.format(cal.getTime());
             address.append("&start_date=").append(str.substring(0, 22));
-        }
+        }*/
         if (address.length() > 0) {
 
             logger.info("Currents API URL: " + address.toString());
             try {
-                //URL url = new URL(address.toString() + "&apiKey=" + currentsApiKey);
-                //JSONObject currentsApiJsonObject = new JSONObject(urlToJson(url));
 
                 String jsonString = null;
                 logger.info("Checking if Response already in cache ...");
@@ -88,35 +99,23 @@ public class CurrentsApiService extends AbstractFilter {
                     logger.info("Get Response from Cache ...");
 
                 } else {
-                    jsonString = readJsonFromUrl(address.toString() + "&apiKey=" + currentsApiKey);
+                    jsonString = readJsonFromUrl(address.toString() + "&apiKey=" + currentsApiToken);
                     cache.put(address.toString(), jsonString);
                     logger.info("Put Response in Cache ...");
-                    logger.info("Call API: "+jsonString);
                 }
                 JSONObject currentsApiJsonObject = new JSONObject(jsonString);
                 JSONArray newsArray = new JSONArray(currentsApiJsonObject.getString("news"));
-                ArrayList<Object> NEWS_ARRAY_LIST = new ArrayList<>();
 
                 try {
-                    //    JSONArray jsonArray = new JSONArray(newsArray);
-                    for (int i = 0; i < newsArray.length(); i++) {
-                        JSONObject array1 = newsArray.getJSONObject(i);
+                    ObjectMapper mapper = new ObjectMapper();
+                    mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
-                        NEWS_ARRAY_LIST.add(new News(array1.getString("id"),
-                                array1.getString("title"),
-                                array1.getString("description"),
-                                array1.getString("url"),
-                                array1.getString("author"),
-                                array1.getString("image"),
-                                array1.getString("published")));
-                    }
+                    NEWS_ARRAY_LIST = mapper.readValue(newsArray.toString(), new TypeReference<List<News>>(){});
 
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     logger.error("Error parsing JSONObject in JSONArray");
                     e.printStackTrace();
                 }
-                HttpServletRequest request = renderContext.getRequest();
-                request.setAttribute("newsList", NEWS_ARRAY_LIST);
 
             } catch (JSONException e) {
                 logger.error("Missing information for Currents API News");
@@ -127,16 +126,11 @@ public class CurrentsApiService extends AbstractFilter {
             }
 
         }
-        return null;
+        logger.info("Request {} executed in {} ms", address, (System.currentTimeMillis() - l));
+
+        return NEWS_ARRAY_LIST;
     }
 
-    public void setCurrentsApiKey(String currentsApiKey) {
-        this.currentsApiKey = currentsApiKey;
-    }
-
-    public String getCurrentsApiKey() {
-        return currentsApiKey;
-    }
 
     private static String readAll(Reader rd) throws IOException {
         StringBuilder sb = new StringBuilder();

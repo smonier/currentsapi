@@ -9,6 +9,8 @@
 <%@ taglib prefix="query" uri="http://www.jahia.org/tags/queryLib" %>
 <%@ taglib prefix="utility" uri="http://www.jahia.org/tags/utilityLib" %>
 <%@ taglib prefix="s" uri="http://www.jahia.org/tags/search" %>
+<%@ taglib prefix="cnews" uri="http://www.jahia.org/tags/currentsNews" %>
+
 <%--@elvariable id="currentNode" type="org.jahia.services.content.JCRNodeWrapper"--%>
 <%--@elvariable id="out" type="java.io.PrintWriter"--%>
 <%--@elvariable id="script" type="org.jahia.services.render.scripting.Script"--%>
@@ -28,7 +30,7 @@
 
 <c:set var="title" value="${currentNode.properties['jcr:title'].string}"/>
 <c:set var="bannerText" value="${currentNode.properties['bannerText'].string}"/>
-<template:addCacheDependency node="${currentNode}"/>
+<c:set var="newsList" value="${cnews:getCurrentsNews(queryType, searchKeyword, language, category, region)}"/>
 
 
 <!--Title-->

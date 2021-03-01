@@ -1,4 +1,4 @@
-package org.jahia.modules.currentsapi.initializers;
+package org.jahia.se.modules.currentsapi.initializers;
 
 /**
  * Created by smo on 04.11.20.
