@@ -1,13 +1,13 @@
 # News Currents API
 
-
-
 This Jahia jContent V8 module is designed to retrieve News from the Currents API 
 (https://currentsapi.services/en)
 ---
 ### API KEY
-You need to add to your jahia.properties the API key that you'll get from Currents API (600 request a day for free)
-jahia.modules.publicnewsapi.attr.currentsApi.key=<YOUR_API_KEY>
+<YOUR_INSTALL_DIR>/digital-factory-data/karaf/etc/org.jahia.se.modules.currentsapi.taglibs.CurrentsApiService.cfg
+```
+currentsApiKey=<YOUR_API_KEY>
+```
 ## Query Parameters
 The components presents 2 choices based on the API:
 
@@ -15,8 +15,12 @@ The components presents 2 choices based on the API:
 2. A Search with the following criterias:
  - searchKeyword
  - category 
- - Search news after the given date
  - region 
  - language
 
+### Screenshots
+Isotope List
 ![picture](./src/main/resources/images/readme/currentsAPIscreenshot.png)
+
+Vertical Carousel
+![picture](./src/main/resources/images/readme/currentsAPIscreenshot2.png)
