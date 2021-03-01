@@ -56,7 +56,6 @@ public class CurrentsApiService {
         List<News> NEWS_ARRAY_LIST = new ArrayList<>();
         String currentsApiToken = currentsApiKey;
         logger.info("********************* CurrentsApiService *********************");
-        logger.info("API Key: "+ currentsApiToken);
         long l = System.currentTimeMillis();
 
 
