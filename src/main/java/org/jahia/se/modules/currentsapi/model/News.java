@@ -2,6 +2,7 @@ package org.jahia.se.modules.currentsapi.model;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 public class News {
 
@@ -12,6 +13,8 @@ public class News {
     private String author;
     private String image;
     private String published;
+    private String categories;
+
 
     //    public News(String id, String title, String description, String url, String author, String image, String published) {
     public News() {
@@ -22,6 +25,7 @@ public class News {
         this.author = author;
         this.image = image;
         this.published = published;
+        this.categories = categories;
 
     }
 
@@ -58,6 +62,10 @@ public class News {
 
     }
 
+    public String getCategories() {
+        return categories;
+    }
+
     public void setId(String id) {
         this.id = id;
     }
@@ -84,5 +92,9 @@ public class News {
 
     public void setPublished(String published) {
         this.published = published;
+    }
+
+    public void setCategories(String categories) {
+        this.categories = categories;
     }
 }

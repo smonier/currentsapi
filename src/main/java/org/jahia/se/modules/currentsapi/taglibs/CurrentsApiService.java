@@ -37,11 +37,12 @@ public class CurrentsApiService {
     public void activate(Map<String, ?> props) {
         try {
             setCurrentsApiKey((String) props.get("currentsApiKey"));
-            logger.info("API Key:"+getCurrentsApiKey());
+            logger.info("API Key:" + getCurrentsApiKey());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
+
     public String getCurrentsApiKey() {
         return currentsApiKey;
     }
@@ -92,7 +93,7 @@ public class CurrentsApiService {
 
                 String jsonString = null;
                 logger.info("Checking if Response already in cache ...");
-                logger.info("Cache Size: "+cache.size());
+                logger.info("Cache Size: " + cache.size());
                 if (cache.get(address.toString()) != null) {
                     jsonString = cache.get(address.toString());
                     logger.info("Get Response from Cache ...");
@@ -108,8 +109,9 @@ public class CurrentsApiService {
                 try {
                     ObjectMapper mapper = new ObjectMapper();
                     mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-
-                    NEWS_ARRAY_LIST = mapper.readValue(newsArray.toString(), new TypeReference<List<News>>(){});
+                    logger.info(newsArray.toString());
+                    NEWS_ARRAY_LIST = mapper.readValue(newsArray.toString(), new TypeReference<List<News>>() {
+                    });
 
                 } catch (Exception e) {
                     logger.error("Error parsing JSONObject in JSONArray");

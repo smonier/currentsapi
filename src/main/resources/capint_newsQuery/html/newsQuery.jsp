@@ -64,6 +64,10 @@
                         <c:if test="${not author.startsWith('[')}">
                             <p><span class="text-muted font-italic">${news.getAuthor()}</span></p>
                         </c:if>
+                        <br/>
+
+                            <span class="text-muted font-italic">${news.getCategories()}</span>
+
 
                     </div>
                     <a href="${news.getUrl()}" class="read-more" title="${news.getTitle()}">Read More</a>

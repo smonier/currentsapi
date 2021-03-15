@@ -10,6 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class NewsDeserializer extends StdDeserializer<News> {
@@ -22,6 +24,7 @@ public class NewsDeserializer extends StdDeserializer<News> {
     private static final String NEWS_AUTHOR = "/author";
     private static final String NEWS_IMAGE = "/image";
     private static final String NEWS_PUBLISHED = "/published";
+    private static final String NEWS_CATEGORY = "/category";
 
 
     public NewsDeserializer() {
@@ -56,8 +59,22 @@ public class NewsDeserializer extends StdDeserializer<News> {
         newsAsset.setImage(newsImage.textValue());
         JsonNode newsPublished = newsNode.at(NEWS_PUBLISHED);
         newsAsset.setPublished(newsPublished.textValue());
-        
+        JsonNode newsCategories = newsNode.at(NEWS_CATEGORY);
+        newsAsset.setCategories(newsCategories.toString());
+
         return newsAsset;
+    }
+
+    public static List<String> getStringList(JsonNode data, String field) {
+        if (data.has(field)) {
+            List<String> list = new ArrayList<>();
+            data.get(field).forEach(node -> list.add(node.asText()));
+            logger.info("Deserializing News Cat: "+list.toString());
+
+            return list;
+        } else {
+            return null;
+        }
     }
 
 }
