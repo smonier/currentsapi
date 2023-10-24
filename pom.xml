@@ -50,7 +50,7 @@
   <parent>
     <groupId>org.jahia.modules</groupId>
     <artifactId>jahia-modules</artifactId>
-    <version>8.0.1.0</version>
+    <version>8.1.2.3</version>
   </parent>
   <groupId>org.se.modules</groupId>
   <artifactId>currentsapi</artifactId>
@@ -81,7 +81,7 @@
     <repository>
       <releases>
         <enabled>true</enabled>
-        <updatePolicy>never</updatePolicy>
+        <updatePolicy>true</updatePolicy>
       </releases>
       <snapshots>
         <enabled>true</enabled>
@@ -96,18 +96,29 @@
       <plugin>
         <groupId>org.apache.felix</groupId>
         <artifactId>maven-bundle-plugin</artifactId>
-        <version>3.5.1</version>
         <extensions>true</extensions>
-        <dependencies>
-          <dependency>
-            <groupId>biz.aQute.bnd</groupId>
-            <artifactId>biz.aQute.bndlib</artifactId>
-            <version>4.3.1</version>
-          </dependency>
-        </dependencies>
+        <configuration>
+          <instructions>
+            <Jahia-Depends>default</Jahia-Depends>
+          </instructions>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>11</source>
+          <target>11</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-bundle-plugin</artifactId>
+        <extensions>true</extensions>
         <configuration>
           <instructions>
             <DynamicImport-Package>com.hazelcast.config;version="[3.7,4)",com.hazelcast.core;version="[3.7,4)"</DynamicImport-Package>
+            <Jahia-Static-Resources>/css,/fonts,/javascript,/images,/icons,/img</Jahia-Static-Resources>
           </instructions>
         </configuration>
       </plugin>

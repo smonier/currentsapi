@@ -32,3 +32,44 @@
     height:245px;
     border: solid 5px #ffffff ;
 }
+
+.module_header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 10px 0px;
+    vertical-align: middle;
+}
+.module_title {
+    flex-grow: 0;
+    padding-right: 10px;
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 30.9px;
+    margin-bottom: .5rem;
+    font-family: inherit;
+    color: inherit;
+}
+
+.module_divider {
+    flex-grow: 1;
+    height: 2px;
+    background-color: #666;
+}
+
+.module_body {
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 22.5px;
+    padding: 15px 15px;
+    box-shadow: 0 0 11px rgb(33 33 33 / 20%);
+    border-radius: .25rem;
+}
+
+.module_body_noheight{
+    font-weight: 300;
+    line-height: 22.5px;
+    padding: 15px 15px;
+    box-shadow: 0 0 11px rgb(33 33 33 / 20%);
+    border-radius: .25rem;
+}

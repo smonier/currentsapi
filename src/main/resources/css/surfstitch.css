@@ -1,44 +1,6 @@
 /*! CSS Used from: https://demov8-smonier.internal.cloud.jahia.com/modules/bootstrap4-core/css/bootstrap.min.css ; media=screen */
 @media screen {
-    *, ::after, ::before {
-        box-sizing: border-box;
-    }
 
-    h2 {
-        margin-top: 0;
-        margin-bottom: .5rem;
-    }
-
-    p {
-        margin-top: 0;
-        margin-bottom: 1rem;
-    }
-
-    a {
-        color: #007bff;
-        text-decoration: none;
-        background-color: transparent;
-    }
-
-    a:hover {
-        color: #0056b3;
-        text-decoration: underline;
-    }
-
-    img {
-        vertical-align: middle;
-        border-style: none;
-    }
-
-    h2 {
-        margin-bottom: .5rem;
-        font-weight: 500;
-        line-height: 1.2;
-    }
-
-    h2 {
-        font-size: 2rem;
-    }
 
     .row {
         display: -ms-flexbox;
