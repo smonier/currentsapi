@@ -104,7 +104,7 @@ public class CurrentsApiService {
                     logger.info("Put Response in Cache ...");
                 }
                 JSONObject currentsApiJsonObject = new JSONObject(jsonString);
-                JSONArray newsArray = new JSONArray(currentsApiJsonObject.getString("news"));
+                JSONArray newsArray = new JSONArray(currentsApiJsonObject.optString("news"));
 
                 try {
                     ObjectMapper mapper = new ObjectMapper();
